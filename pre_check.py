@@ -1,3 +1,38 @@
+"""
+pre_check.py
+
+This module performs a set of early runtime validations for a GitHub Action that
+relies on environment inputs. It ensures required environment variables are
+present, and validates the given values as allowed. When a validation fails, the
+module writes an error message to stdout in the GitHub Actions error format and
+exits the process with a non-zero status.
+
+Behavior and checks performed:
+- Reads expected inputs from environment variables:
+    - INPUT_TIMEZONE: timezone name to be validated via pytz
+    - INPUT_PUSH_TAG: string flag expected to be "true" or "false"
+    - INPUT_GITHUB_TOKEN: token required when pushing tags
+- Validates that INPUT_TIMEZONE corresponds to a known pytz timezone.
+- Validates that INPUT_PUSH_TAG is either "true" or "false".
+- If pushing tags is requested (INPUT_PUSH_TAG == 'true'), verifies that
+  INPUT_GITHUB_TOKEN is present and non-empty.
+
+Exit behavior:
+- On any validation failure, the module prints an error line prefixed with
+  "::error::" (so it surfaces in GitHub Actions logs) and exits the process with
+  exit code 1.
+
+Notes on redundancy:
+- Some of the checks here may appear redundant with checks performed elsewhere
+  They are intentionally duplicated here to provide a single, early, and
+  explicit fail-fast validation. Primary this is for when in some parts
+  validation is not as easy to do.
+
+Usage:
+- This module is intended to be executed at process start to fail fast on bad
+  inputs. No return value is provided; successful completion simply means the
+  checks passed and the program may continue.
+"""
 import os
 import pytz
 

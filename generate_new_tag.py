@@ -14,10 +14,23 @@ def get_latest_tag():
 
 
 def main():
-    # TZ check should've already been run via pre_check.py
-    tz_name = os.getenv('INPUT_TIMEZONE', '')
+    timezone = os.getenv('INPUT_TIMEZONE')
 
-    today = datetime.now(pytz.timezone(tz_name)).strftime("%Y.%m.%d")
+    # region Checks
+    # TZ check should've already been run via pre_check.py
+    # But running redundant checks to ensure
+    if (not timezone):
+        print('::error::Default timezone not set via actions.yml')
+        exit(1)
+
+    try:
+        pytz.timezone(timezone)
+    except pytz.UnknownTimeZoneError:
+        print(f'::error::Unknown timezone: {timezone}')
+        exit(1)
+    # endregion
+
+    today = datetime.now(pytz.timezone(timezone)).strftime("%Y.%m.%d")
     latest_tag = get_latest_tag()
 
     # Check if latest tag matches today's date
