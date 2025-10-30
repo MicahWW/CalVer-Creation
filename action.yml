@@ -1,6 +1,22 @@
 name: CalVer Creation
 description: Automatically create a new CalVer following YYYY.MM.DD
 
+inputs:
+  timezone:
+    description: 'The time zone to base the date on, e.g. UTC, America/Chicago, etc. (default: UTC)'
+    required: false
+    default: 'UTC'
+  push_tag:
+    description: 'If the newly created version tag should be pushed (default: false)'
+    required: false
+    default: 'false'
+  github_token:
+    description: 'GitHub token for pushing tags'
+    required: false
+outputs:
+  new_version:
+    description: 'The newly generated version tag'
+
 runs:
   using: composite
   steps:
@@ -12,6 +28,13 @@ runs:
     - name: Setup Python
       uses: actions/setup-python@v6
       with:
+        # TODO: Use the .python-version file contents
         python-version: '3.13'
 
-    
+    - name: Pre Check
+      shell: bash
+      run: python ${{ github.action_path }}/pre_check.py
+
+    - name: Generate new tag
+      shell: bash
+      run: python ${{ github.action_path }}/generate_new_tag.py
