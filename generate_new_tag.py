@@ -39,10 +39,8 @@ def main():
 
     if match:
         next_build = int(match.group(1)) + 1
-        print("matched")
     else:
         next_build = 0
-        print("not matched")
 
     new_version = f"{today}+{next_build}"
     print(f"::set-output name=new_version::{new_version}")
