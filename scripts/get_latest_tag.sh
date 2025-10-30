@@ -1,5 +1,4 @@
 #!/bin/bash
 
-latest_tag=$(git tag --sort=-creatordate | head -n 1)
+latest_tag=$(git describe --tags --abbrev=0)
 echo "Latest tag: $latest_tag"
-echo "$GITHUB_OUTPUT"
