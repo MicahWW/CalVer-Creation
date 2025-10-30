@@ -9,7 +9,9 @@ runs:
       with:
         fetch-depth: 0
     
-    - name: Get latest tag
-      shell: bash
-      # run: git tag --list --merged HEAD --sort=-committerdate
-      run: ${{ github.action_path }}/scripts/get_latest_tag.sh
+    - name: Setup Python
+      uses: actions/setup-python@v6
+      with:
+        python-version: '3.13'
+
+    
