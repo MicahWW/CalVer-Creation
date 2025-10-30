@@ -18,6 +18,10 @@ outputs:
     description: 'The newly generated version tag'
 
 runs:
+  env:
+    INPUT_TIMEZONE: ${{ inputs.timezone }}
+    INPUT_PUSH_TAG: ${{ inputs.push_tag }}
+    INPUT_GITHUB_TOKEN: ${{ inputs.github_token }}
   using: composite
   steps:
     - name: Checkout calling repo
@@ -33,6 +37,7 @@ runs:
     
     - name: Install Python dependencies
       shell: bash
+      # TODO: setup output grouping
       run: pip install -r ${{ github.action_path }}/requirements.txt
 
     - name: Pre Check
