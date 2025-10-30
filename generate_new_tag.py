@@ -44,7 +44,8 @@ def main():
 
     new_version = f"{today}+{next_build}"
     print(f'new_version: {new_version}')
-    print(f"::set-output name=new_version::{new_version}")
+    with open(os.environ['GITHUB_OUTPUT'], 'a') as gh_output:
+        gh_output.write(f'new_version={new_version}')
 
 
 if __name__ == "__main__":
