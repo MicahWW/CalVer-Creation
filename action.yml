@@ -10,4 +10,5 @@ runs:
         fetch-depth: 0
     
     - name: Get latest tag
+      shell: bash
       run: ${{ github.action_path }}/scripts/get_latest_tag.sh
