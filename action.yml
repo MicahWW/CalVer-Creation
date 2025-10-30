@@ -18,10 +18,6 @@ outputs:
     description: 'The newly generated version tag'
 
 runs:
-  env:
-    INPUT_TIMEZONE: ${{ inputs.timezone }}
-    INPUT_PUSH_TAG: ${{ inputs.push_tag }}
-    INPUT_GITHUB_TOKEN: ${{ inputs.github_token }}
   using: composite
   steps:
     - name: Checkout calling repo
@@ -41,9 +37,16 @@ runs:
       run: pip install -r ${{ github.action_path }}/requirements.txt
 
     - name: Pre Check
+      env:
+        INPUT_TIMEZONE: ${{ inputs.timezone }}
+        INPUT_PUSH_TAG: ${{ inputs.push_tag }}
+        INPUT_GITHUB_TOKEN: ${{ inputs.github_token }}
       shell: bash
       run: python ${{ github.action_path }}/pre_check.py
 
     - name: Generate new tag
+      id: new_tag
+      env:
+        INPUT_TIMEZONE: ${{ inputs.timezone }}
       shell: bash
       run: python ${{ github.action_path }}/generate_new_tag.py
