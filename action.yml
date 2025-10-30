@@ -11,4 +11,5 @@ runs:
     
     - name: Get latest tag
       shell: bash
-      run: ${{ github.action_path }}/scripts/get_latest_tag.sh
+      run: git tag --list --merged HEAD --sort=-committerdate
+      # run: ${{ github.action_path }}/scripts/get_latest_tag.sh
