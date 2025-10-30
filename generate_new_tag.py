@@ -43,6 +43,7 @@ def main():
         next_build = 0
 
     new_version = f"{today}+{next_build}"
+    print(f'new_version: {new_version}')
     print(f"::set-output name=new_version::{new_version}")
 
 
