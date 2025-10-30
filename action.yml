@@ -1,0 +1,13 @@
+name: CalVer Creation
+description: Automatically create a new CalVer following YYYY.MM.DD
+
+runs:
+  using: composite
+  steps:
+    - name: Checkout calling repo
+      uses: actions/checkout@v5
+      with:
+        fetch-depth: 0
+    
+    - name: Get latest tag
+      run: ${{ github.action_path }}/scripts/get_latest_tag.sh
