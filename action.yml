@@ -87,5 +87,5 @@ runs:
       shell: bash
       run: |
         echo "::group::Publishing release"
-        gh release create ${{ steps.new_tag.output_new_version }} --generate-notes --verify-tag
+        gh release create ${{ steps.new_tag.outputs.new_version }} --generate-notes --verify-tag
         echo "::endgroup::"
