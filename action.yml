@@ -17,13 +17,13 @@ inputs:
     description: 'If the newly created version tag should be pushed, requires github_token. (default: false)'
     required: false
     default: 'false'
-  github_token:
-    description: 'GitHub token for pushing tags'
-    required: false
   publish_release:
     description: 'If the newly created & pushed tag should have a GitHub Release created, required push_tag=true & github_token. (default: false)'
     required: false
     default: 'false'
+  github_token:
+    description: 'GitHub token for pushing tags'
+    required: false
 outputs:
   new_version:
     description: 'The newly generated version tag'
