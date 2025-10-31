@@ -1,5 +1,9 @@
 name: CalVer Creation
+author: MicahWW
 description: Automatically create a new CalVer following YYYY.MM.DD
+branding:
+  icon: 'calendar'
+  color: 'blue'
 
 inputs:
   timezone:
@@ -19,6 +23,7 @@ inputs:
 outputs:
   new_version:
     description: 'The newly generated version tag'
+    value: ${{ steps.new_tag.outputs.new_version }}
 
 runs:
   using: composite
