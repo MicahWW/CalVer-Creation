@@ -67,7 +67,7 @@ def main():
             exit(1)
         # if it doesn't match then it is good to create a new tag
         else:
-            new_version = today
+            new_version = f"{prefix}{today}"
 
     # display and output new version
     print(f'new_version: {new_version}')
