@@ -41,6 +41,7 @@ def main():
     push_tag = os.getenv('INPUT_PUSH_TAG')
     github_token = os.getenv('INPUT_GITHUB_TOKEN')
     publish_release = os.getenv('INPUT_PUBLISH_RELEASE')
+    set_build_metadata = os.getenv('INPUT_SET_BUILD_METADATA')
 
     # region Check values are set
     if (not timezone):
@@ -55,6 +56,9 @@ def main():
         print('::error::Default publish_release not set via actions.yml')
         exit(1)
 
+    if (not set_build_metadata):
+        print('::error::Default set_build_metadata not set via actions.yml')
+        exit(1)
     # endregion
 
     # region Check timezone
@@ -74,6 +78,9 @@ def main():
         print(f'::error::Unexpected input for publish_release of "{publish_release}"')
         exit(1)
 
+    if (set_build_metadata not in ['true', 'false']):
+        print(f'::error::Unexpected input for set_build_metadata of "{set_build_metadata}"')
+        exit(1)
     # endregion
 
     # region Check github token

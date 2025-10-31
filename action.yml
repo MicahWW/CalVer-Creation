@@ -24,6 +24,10 @@ inputs:
   github_token:
     description: 'GitHub token for pushing tags'
     required: false
+  set_build_metadata:
+    description: 'If the build metadata should be set and incremented at the end of the version tag. (default: true)'
+    required: false
+    default: 'true'
 outputs:
   new_version:
     description: 'The newly generated version tag'
@@ -56,6 +60,7 @@ runs:
         INPUT_PUSH_TAG: ${{ inputs.push_tag }}
         INPUT_GITHUB_TOKEN: ${{ inputs.github_token }}
         INPUT_PUBLISH_RELEASE: ${{ inputs.publish_release }}
+        INPUT_SET_BUILD_METADATA: ${{ inputs.set_build_metadata }}
       shell: bash
       run: python ${{ github.action_path }}/pre_check.py
 
@@ -64,6 +69,7 @@ runs:
       env:
         INPUT_TIMEZONE: ${{ inputs.timezone }}
         INPUT_PREFIX: ${{ inputs.prefix }}
+        INPUT_SET_BUILD_METADATA: ${{ inputs.set_build_metadata }}
       shell: bash
       run: python ${{ github.action_path }}/generate_new_tag.py
 
