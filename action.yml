@@ -20,6 +20,10 @@ inputs:
   github_token:
     description: 'GitHub token for pushing tags'
     required: false
+  publish_release:
+    description: 'If the newly created & pushed tag should have a GitHub Release created, required push_tag=true & github_token. (default: false)'
+    required: false
+    default: 'false'
 outputs:
   new_version:
     description: 'The newly generated version tag'
@@ -70,3 +74,11 @@ runs:
         git config user.email "github-actions@github.com"
         git tag ${{ steps.new_tag.outputs.new_version }}
         git push origin ${{ steps.new_tag.outputs.new_version }}
+
+    - name: Publish Release
+      if: ${{ inputs.publish_release == 'true' }}
+      env:
+        GITHUB_TOKEN: ${{ inputs.github_token }}
+      shell: bash
+      run: |
+        gh release create ${{ steps.new_tag.output_new_version }} --generate-notes --verify-tag
