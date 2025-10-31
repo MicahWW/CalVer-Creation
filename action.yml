@@ -53,6 +53,7 @@ runs:
         INPUT_TIMEZONE: ${{ inputs.timezone }}
         INPUT_PUSH_TAG: ${{ inputs.push_tag }}
         INPUT_GITHUB_TOKEN: ${{ inputs.github_token }}
+        INPUT_PUBLISH_RELEASE: ${{ inputs.publish_release }}
       shell: bash
       run: python ${{ github.action_path }}/pre_check.py
 
