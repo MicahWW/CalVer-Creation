@@ -35,48 +35,55 @@ Usage:
 import os
 import pytz
 
-timezone = os.getenv('INPUT_TIMEZONE')
-push_tag = os.getenv('INPUT_PUSH_TAG')
-github_token = os.getenv('INPUT_GITHUB_TOKEN')
-publish_release = os.getenv('INPUT_PUBLISH_RELEASE')
 
-# region Check values are set
-if (not timezone):
-    print('::error::Default timezone not set via actions.yml')
-    exit(1)
+def main():
+  timezone = os.getenv('INPUT_TIMEZONE')
+  push_tag = os.getenv('INPUT_PUSH_TAG')
+  github_token = os.getenv('INPUT_GITHUB_TOKEN')
+  publish_release = os.getenv('INPUT_PUBLISH_RELEASE')
 
-if (not push_tag):
-    print('::error::Default push_tag not set via actions.yml')
-    exit(1)
+  # region Check values are set
+  if (not timezone):
+      print('::error::Default timezone not set via actions.yml')
+      exit(1)
 
-if (not publish_release):
-    print('::error::Default publish_release not set via actions.yml')
-    exit(1)
+  if (not push_tag):
+      print('::error::Default push_tag not set via actions.yml')
+      exit(1)
 
-# endregion
+  if (not publish_release):
+      print('::error::Default publish_release not set via actions.yml')
+      exit(1)
 
-# region Check timezone
-try:
-    pytz.timezone(timezone)
-except pytz.UnknownTimeZoneError:
-    print(f'::error::Unknown timezone: {timezone}')
-    exit(1)
-# endregion
+  # endregion
 
-# region Check input allowed values
-if (push_tag not in ['true', 'false']):
-    print(f'::error::Unexpected input for push_tag of "{push_tag}"')
-    exit(1)
+  # region Check timezone
+  try:
+      pytz.timezone(timezone)
+  except pytz.UnknownTimeZoneError:
+      print(f'::error::Unknown timezone: {timezone}')
+      exit(1)
+  # endregion
 
-if (publish_release not in ['true', 'false']):
-    print(f'::error::Unexpected input for publish_release of "{publish_release}"')
-    exit(1)
+  # region Check input allowed values
+  if (push_tag not in ['true', 'false']):
+      print(f'::error::Unexpected input for push_tag of "{push_tag}"')
+      exit(1)
 
-# endregion
+  if (publish_release not in ['true', 'false']):
+      print(f'::error::Unexpected input for publish_release of "{publish_release}"')
+      exit(1)
 
-# region Check github token
-if (not push_tag and push_tag == 'true'):
-    if (not github_token or not github_token.strip()):
-        print('::error::github_token is required ')
-        exit(1)
-# endregion
+  # endregion
+
+  # region Check github token
+  if (not push_tag and push_tag == 'true'):
+      if (not github_token or not github_token.strip()):
+          print('::error::github_token is required ')
+          exit(1)
+  # endregion
+
+if __name__ == "__main__":
+    print("::group::Pre Checks")
+    main()
+    print("::endgroup::")

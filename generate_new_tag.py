@@ -50,4 +50,6 @@ def main():
 
 
 if __name__ == "__main__":
+    print("::group::Generate tag")
     main()
+    print("::endgroup::")
