@@ -6,19 +6,19 @@ branding:
   color: 'blue'
 
 inputs:
+  prefix:
+    description: 'The prefix that will be found in front of each version tag, and should be reused on the new one.'
+    required: false
   timezone:
     description: 'The time zone to base the date on, e.g. UTC, America/Chicago, etc. (default: UTC)'
     required: false
     default: 'UTC'
   push_tag:
-    description: 'If the newly created version tag should be pushed (default: false)'
+    description: 'If the newly created version tag should be pushed, requires github_token. (default: false)'
     required: false
     default: 'false'
   github_token:
     description: 'GitHub token for pushing tags'
-    required: false
-  prefix:
-    description: 'The prefix that will be found in front of each version tag, and should be reused on the new one.'
     required: false
 outputs:
   new_version:
