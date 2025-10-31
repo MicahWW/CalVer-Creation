@@ -15,6 +15,7 @@ def get_latest_tag():
 
 def main():
     timezone = os.getenv('INPUT_TIMEZONE')
+    prefix = os.getenv('INPUT_PREFIX', '')
 
     # region Checks
     # TZ check should've already been run via pre_check.py
@@ -33,8 +34,8 @@ def main():
     today = datetime.now(pytz.timezone(timezone)).strftime("%Y.%m.%d")
     latest_tag = get_latest_tag()
 
-    # Check if latest tag matches today's date
-    pattern = re.compile(rf"^{today}\+(\d+)$")
+    # Check if latest tag matches today's date and with the given prefix
+    pattern = re.compile(rf"^{prefix}{today}\+(\d+)$")
     match = pattern.match(latest_tag)
 
     if match:
@@ -42,7 +43,7 @@ def main():
     else:
         next_build = 0
 
-    new_version = f"{today}+{next_build}"
+    new_version = f"{prefix}{today}+{next_build}"
     print(f'new_version: {new_version}')
     with open(os.environ['GITHUB_OUTPUT'], 'a') as gh_output:
         gh_output.write(f'new_version={new_version}')

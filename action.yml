@@ -13,6 +13,9 @@ inputs:
   github_token:
     description: 'GitHub token for pushing tags'
     required: false
+  prefix:
+    description: 'The prefix that will be found in front of each version tag, and should be reused on the new one.'
+    required: false
 outputs:
   new_version:
     description: 'The newly generated version tag'
@@ -48,6 +51,7 @@ runs:
       id: new_tag
       env:
         INPUT_TIMEZONE: ${{ inputs.timezone }}
+        INPUT_PREFIX: ${{ inputs.prefix }}
       shell: bash
       run: python ${{ github.action_path }}/generate_new_tag.py
 
