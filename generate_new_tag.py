@@ -7,7 +7,7 @@ import subprocess
 
 def get_latest_tag():
     # requires to be run in Linux
-    cmd = "git tag --list --sort=-committerdate | sort -V | tail -n 1"
+    cmd = "git tag --list --sort=-committerdate | grep -E '^[0-9]+\.[0-9]+\.[0-9]+(\+[0-9]+)?$' | sort -V | tail -n 1"
 
     result = subprocess.run(cmd, shell=True, stdout=subprocess.PIPE, text=True, check=True)
     return result.stdout.strip()
