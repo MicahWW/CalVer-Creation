@@ -1,21 +1,22 @@
 # CalVer Creation
 Creates a new version based on the current day's date (default of UTC but can specify timezone) and will auto increment the build metadata field (the # after the '+') to ensure that a tag is not overwritten by accident. Having this ability to create unique tags and easily readable allows for fast paced projects to create multiple tags a day, with no overlap, to help trigger other workflows or other items.
 
-## Inputs
-- prefix:
-  - Allows for setting/reading a prefix, typically 'v', in front of the generated version. By default it is blank to somewhat follow [SemVer](https://semver.org/) standards.
-- timezone:
-  - Allows for the setting of a custom timezone, instead of the default UTC. Valid timezones are those defined by _pytz_ in Python, examples of such are _America/Chicago_, _Europe/Amsterdam_, _UTC_, etc.
-- push_tag:
-  - Allows for setting and pushing the generated tag to GitHub. If set to 'true' it requires that the github_token is set and has `contents:write` so it has permission to push.
-- publish_release:
-  - Allows for the publishing of a new GitHub release. If set to 'true' it requires that push_tag is set to true and github_token is set and has `contents:write` so it can publish.
-- github_token:
-  - The token used for any `git` operations.
-- set_build_metadata:
-  - Toggles the feature of appending build metadata to the end of the version. If this is set to 'false' after the first run for a calendar day, all subsequent runs will fail as it would attempt to create/overwrite a tag that was created on the first run.
+## Input parameters
+|Parameter Name|Required?|Type|Default Value|Description|
+|---|---|---|---|---|
+|prefix|false|string|''| For setting/reading a prefix, typically 'v', in front of the generated version. [SemVer standards](https://semver.org/) don't allow it but it is commonly done.|
+|timezone|false|string|'UTC'| For the setting the timezone used. Valid timezones are those defined by _pytz_ in Python, examples of such are _America/Chicago_, _Europe/Amsterdam_, _UTC_, etc.|
+|push_tag|false|bool|false| For setting and pushing the generated tag to GitHub. If set to 'true' it requires that the github_token is set and has `contents:write` so it has permission to push.|
+|publish_release|false|bool|false| For the publishing of a new GitHub release. If set to 'true' it requires that push_tag is set to true and github_token is set and has `contents:write` so it can publish.|
+|github_token|false|string|none|The token used for any `git` operations.|
+|set_build_metadata|false|bool|true| Toggles the feature of appending build metadata to the end of the version. If this is set to 'false' after the first run for a calendar day, all subsequent runs will fail as it would attempt to create/overwrite a tag that was created on the first run.|
 
-## Workflow permissions
+## Workflow Outputs
+|Parameter Name|Type|Description|
+|---|---|---|
+|new_version|string|The newly generated version tag.|
+
+## GitHub Workflow permissions
 Both pushing a new tag and publishing a new release require the `contents: write` permission to be set. You can see an example of how this is set at the [Create and push a new tag usage example](#create-and-push-a-new-tag).
 
 ## Usage

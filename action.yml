@@ -9,6 +9,7 @@ inputs:
   prefix:
     description: 'The prefix that will be found in front of each version tag, and should be reused on the new one.'
     required: false
+    default: ''
   timezone:
     description: 'The time zone to base the date on, e.g. UTC, America/Chicago, etc. (default: UTC)'
     required: false
